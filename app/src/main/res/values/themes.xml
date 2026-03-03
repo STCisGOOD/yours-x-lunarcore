@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme - using AppCompat (no Material library needed) -->
+    <!-- Compose handles all actual theming via YoursTheme -->
+    <style name="Theme.Yours" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Status bar -->
+        <item name="android:statusBarColor">#0A0A0B</item>
+        <item name="android:navigationBarColor">#0A0A0B</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Background -->
+        <item name="android:colorBackground">#0A0A0B</item>
+        <item name="android:windowBackground">#0A0A0B</item>
+
+        <!-- No action bar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Camera theme - full screen, immersive -->
+    <style name="Theme.Yours.Camera" parent="Theme.Yours">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+</resources>

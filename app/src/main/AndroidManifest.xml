@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- MINIMAL PERMISSIONS - Sovereignty requires minimal attack surface -->
+    
+    <!-- Camera: Required for sovereign photo capture -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    
+    <!-- Internet: Only for P2P transfer, NOT for cloud sync -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- WiFi Direct: For local P2P transfer -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" 
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="tiramisu" />
+    
+    <!-- Vibration: For haptic feedback -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- USB Host: For ESP32 LoRa companion device -->
+    <uses-feature android:name="android.hardware.usb.host" android:required="false" />
+
+    <!-- EXPLICITLY NOT REQUESTED:
+         - ACCESS_FINE_LOCATION (no GPS, ever)
+         - ACCESS_COARSE_LOCATION (no location, ever)
+         - READ_EXTERNAL_STORAGE (vault is internal only)
+         - WRITE_EXTERNAL_STORAGE (vault is internal only)
+         - READ_CONTACTS (we don't touch phone contacts)
+         - RECORD_AUDIO (not yet, maybe later)
+         - RECEIVE_BOOT_COMPLETED (no background services)
+    -->
+
+    <application
+        android:name=".YoursApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Yours"
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="34">
+        
+        <!-- Main Activity -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Yours"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- USB device attached - ESP32 LoRa companion -->
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/usb_device_filter" />
+        </activity>
+        
+        <!-- Camera Activity (full screen) -->
+        <activity
+            android:name=".ui.CameraActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Yours.Camera"
+            android:screenOrientation="portrait" />
+            
+        <!-- No services that run in background -->
+        <!-- No broadcast receivers that wake the app -->
+        <!-- No content providers that expose data -->
+        
+    </application>
+
+</manifest>

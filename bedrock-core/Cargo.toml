@@ -1,0 +1,98 @@
+[package]
+name = "bedrock-core"
+version = "0.2.0"
+edition = "2021"
+description = "Bedrock Protocol cryptographic primitives for Android - Anonymous Credentials & Mesh Identity"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+name = "bedrock_core"
+
+[dependencies]
+# JNI bindings
+jni = { version = "0.21", default-features = false }
+
+# ============================================
+# TIER 1: Pairing Cryptography Foundation
+# ============================================
+
+# BLS12-381 pairing curve (audited by NCC Group)
+# Using portable feature for Android cross-compilation
+blstrs = { version = "0.7", features = ["portable"] }
+ff = "0.13"
+group = "0.13"
+
+# ============================================
+# TIER 2: Anonymous Credentials (BBS+)
+# ============================================
+
+# BBS+ signatures for anonymous credentials
+bbs_plus = "0.25"
+
+# Dynamic accumulators for revocation
+vb_accumulator = "0.25"
+
+# ============================================
+# TIER 3: Rate-Limiting Tokens
+# ============================================
+
+# (VOPRF implemented manually using blstrs primitives)
+
+# ============================================
+# TIER 4: Mesh Identity (Ring Signatures)
+# ============================================
+
+# Ristretto255 for ring signatures (CLSAG)
+# SECURITY: curve25519-dalek 4.x uses fiat-crypto backend by default on 64-bit platforms.
+# This provides formally verified constant-time field arithmetic, preventing timing attacks.
+# The zeroize feature ensures secrets are cleared from memory when dropped.
+curve25519-dalek = { version = "4", features = ["serde", "rand_core", "digest", "zeroize"] }
+
+# ============================================
+# Existing Cryptography
+# ============================================
+
+ml-kem = "0.2"
+aes-gcm = "0.10"
+sha2 = "0.10"
+sha3 = "0.10"
+hkdf = "0.12"
+ed25519-dalek = { version = "2.1", features = ["rand_core"] }
+x25519-dalek = { version = "2.0", features = ["static_secrets"] }
+argon2 = "0.5"
+rand = "0.8"
+rand_core = "0.6"
+rand_chacha = "0.3"
+
+# Constant-time operations
+subtle = "2.6"
+
+# ChaCha20-Poly1305 for encryption
+chacha20poly1305 = "0.10"
+
+# Shamir's Secret Sharing
+vsss-rs = "4.0"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+bincode = "1"
+zeroize = { version = "1.7", features = ["derive"] }
+bytemuck = "1.14"
+
+# Error handling
+thiserror = "1"
+
+# Thread-safe singletons
+lazy_static = "1.4"
+once_cell = "1.19"
+
+[features]
+default = ["std"]
+std = []
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
+opt-level = "s"

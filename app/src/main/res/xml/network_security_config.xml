@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- 
+    Yours Network Security Configuration
+    
+    This app is designed to work without cloud services.
+    Network access is only for:
+    - P2P transfers (direct or via rendezvous)
+    - No analytics
+    - No tracking
+    - No cloud sync
+    -->
+    
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <!-- Only trust system CAs -->
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    
+    <!--
+    Fix #10: Removed cleartext permission for local networks.
+    P2P transfers must use TLS to prevent MITM attacks.
+    WiFi Direct and local mesh communication should use mTLS.
+    -->
+    <!-- Local network P2P should use TLS - no cleartext allowed -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">192.168.0.0/16</domain>
+        <domain includeSubdomains="true">10.0.0.0/8</domain>
+        <domain includeSubdomains="true">172.16.0.0/12</domain>
+    </domain-config>
+</network-security-config>

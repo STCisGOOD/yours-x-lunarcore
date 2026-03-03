@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Yours Data Extraction Rules
+
+CRITICAL: No data should ever be backed up or extracted.
+The user's keys and encrypted vault must stay on-device only.
+Recovery is through guardians, not through cloud backup.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- Exclude everything from cloud backup -->
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="external" />
+    </cloud-backup>
+    
+    <device-transfer>
+        <!-- Exclude everything from device-to-device transfer -->
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="external" />
+    </device-transfer>
+</data-extraction-rules>

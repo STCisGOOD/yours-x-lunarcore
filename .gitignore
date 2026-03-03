@@ -1,0 +1,11 @@
+app/build/
+build/
+.gradle/
+.idea/
+*.iml
+local.properties
+bedrock-core/target/
+.DS_Store
+Thumbs.db
+*.bak
+tmpclaude-*
