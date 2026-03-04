@@ -2,6 +2,8 @@
 
 Encrypted P2P messaging over LoRa mesh. No servers, no internet, no metadata.
 
+## [Demo](https://x.com/stcisgood/status/2028926459159437436)
+
 ## Stack
 
 - **App**: Android (Kotlin)
