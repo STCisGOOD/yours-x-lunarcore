@@ -2,10 +2,6 @@
 
 Encrypted P2P messaging over LoRa mesh. No servers, no internet, no metadata.
 
-## Demo
-
-https://github.com/STCisGOOD/yours-x-lunarcore/blob/main/demo.mp4
-
 ## Stack
 
 - **App**: Android (Kotlin)
